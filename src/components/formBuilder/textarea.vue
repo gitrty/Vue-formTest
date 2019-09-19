@@ -1,0 +1,94 @@
+<template>
+  <div class="toyo-textarea" data-sub="toyo-textarea">
+    <div class="cont">
+      <p>{{title}}</p>
+      <el-input
+        :maxlength="maxText"
+        type="textarea"
+        :rows="4"
+        :placeholder="textInput"
+        v-model="textarea"
+        style="width:70%"
+      ></el-input>
+    </div>
+    <div class="help">{{help}}</div>
+
+    <div class="handle">
+      <div class="handle1">
+        <i class="el-icon-rank"></i>
+      </div>
+      <div class="handle2">
+        <i class="el-icon-plus"></i>
+      </div>
+      <div class="handle3">
+        <i class="el-icon-close"></i>
+      </div>
+    </div>
+
+    <div class="nature">
+      <p>标题:</p>
+      <input type="text" v-model="title" />
+      <p>描述文字:</p>
+      <input type="text" v-model="textInput" />
+      <p>填写帮助</p>
+      <input type="text" v-model="help" />
+      <p>最大长度</p>
+      <input type="text" v-model="maxText" />
+      <p>
+        <input type="checkbox" v-model="checked" /> 这个是必填项
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: "textarea:",
+      textInput: "placeholdel",
+      textarea: "",
+      help: "最多140个字符",
+      checked: false,
+      maxText: 140
+    };
+  },
+  methods: {}
+};
+</script>
+
+<style lang="less" scoped>
+.toyo-textarea {
+  padding: 20px 0;
+  border: 1px solid rgba(0, 0, 0, 0);
+  position: relative;
+}
+.cont {
+  font-size: 16px;
+  font-weight: 900;
+  color: #606266;
+  white-space: nowrap;
+  p {
+    vertical-align: top;
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding: 0 10px;
+  }
+  input {
+    width: 70%;
+    height: 30px;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    padding: 0 4px;
+    color: #005588;
+    margin-right: 20px;
+    text-indent: 10px;
+  }
+}
+.help {
+  padding-left: 150px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+</style>

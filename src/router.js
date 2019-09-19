@@ -1,25 +1,40 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 
 Vue.use(Router)
 
+import formBuilder from './views/formBuilder.vue'
+
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: 'history',
+  // base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      redirect: '/formTemplate'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      // 模板页面
+      path: '/formTemplate',
+      name: 'formTemplate',
+      component: () => import('./views/formTemplate.vue'),
+      children: [
+        { path: '', redirect: 'yjdy' },
+        { path: 'yjdy', component: () => import('./components/formTemplate/yjdy.vue') },
+        { path: 'yjfk', component: () => import('./components/formTemplate/yjfk.vue') }
+      ]
+    },
+    {
+      // 自定义表单制作页面
+      path: '/formBuilder',
+      name: 'formBuilder',
+      component: formBuilder
+    },
+    {
+      // 制作完成后预览页面
+      path: '/formPreview',
+      name: 'formPreview',
+      component: () => import('./views/formPreview.vue')
     }
   ]
 })
