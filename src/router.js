@@ -5,7 +5,7 @@ Vue.use(Router)
 
 import formBuilder from './views/formBuilder.vue'
 
-export default new Router({
+export const router = new Router({
   // mode: 'history',
   // base: process.env.BASE_URL,
   routes: [
@@ -37,4 +37,13 @@ export default new Router({
       component: () => import('./views/formPreview.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name == 'formPreview') {
+    document.body.style.background = "#bae3f9"
+  }else{
+    document.body.style.background = "#fff"
+  }
+  next()
 })

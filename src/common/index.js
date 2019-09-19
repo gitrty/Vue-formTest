@@ -13,5 +13,11 @@ export default {
       var oNext = refNode.nextElementSibling || refNode.nextSibling;
       parentNode.insertBefore(newNode, oNext)
     }
+    // 字符串转DOM节点
+    Vue.prototype.$parseDom = str => {
+      var obj = document.createElement("div");
+      obj.innerHTML = str;
+      return obj;
+    }
   }
 }

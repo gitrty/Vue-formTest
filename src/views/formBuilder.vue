@@ -2,11 +2,11 @@
   <div class="formBuilder">
     <!-- top -->
     <div class="build-top">
-      <button>
+      <button @click="addform">
         <i class="el-icon-finished"></i>
         保存
       </button>
-      <button>
+      <button @click="$path('/formPreview')">
         <i class="el-icon-finished"></i>
         保存为模板
       </button>
@@ -321,6 +321,12 @@ export default {
         document.onmousemove = document.onmouseup = null;
         newDiv.remove();
       };
+    },
+    // 保存表单
+    addform() {
+      let form = document.querySelector(".container-con");
+      this.$store.state.formHtml = form.innerHTML;
+      // this.$path("/formPreview");
     }
   },
   watch: {

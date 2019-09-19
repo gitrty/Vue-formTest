@@ -26,7 +26,8 @@ export default new Vuex.Store({
       { id: 18, sub: 'toyo-button' }
     ],
     componentId: null,
-    componentSub: null
+    componentSub: null,
+    formHtml: null
   },
   mutations: {
 
