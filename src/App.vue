@@ -10,11 +10,7 @@ export default {
     return {};
   },
   mounted() {
-    // this.$nextTick(() => {
-    this.dargSub();
-    this.addSub();
-    this.delSub();
-    // });
+    this.upData();
   },
   methods: {
     // 1 - 移动位置
@@ -23,25 +19,86 @@ export default {
       handleList.forEach((el, index) => {
         // 鼠标按下
         el.onmousedown = ev => {
-          el.parentNode.parentNode.style.position = "absolute";
-          el.parentNode.parentNode.style.zIndex = "50";
-
           ev = ev || window.event;
           let disY = ev.pageY - el.parentNode.parentNode.offsetTop;
+
+          let newEl = el.parentNode.parentNode.cloneNode(true);
+          newEl.style.position = "absolute";
+          newEl.style.zIndex = "50";
+          newEl.style.top = ev.pageY - disY + "px";
+          document.querySelector(".container-con").appendChild(newEl);
+
+          this.$store.state.componentList.forEach((item, index) => {
+            if (item.id == this.$store.state.componentId) {
+              this.$store.state.componentList.splice(index, 1);
+            }
+          });
+
           // 鼠标移动
           document.onmousemove = ev => {
-            el.parentNode.parentNode.style.top = ev.pageY - disY + "px";
+            newEl.style.top = ev.pageY - disY + "px";
+
+            let component = document.querySelectorAll(".container-con>div");
+            let temIndex = 100;
+            Array.from(component).some((el, index) => {
+              if (newEl.offsetTop < el.offsetTop) {
+                temIndex = index;
+                return true;
+              }
+            });
+            // 鼠标移动时显示需要放置的位置
+            if (temIndex == 100) {
+              component.forEach(item => {
+                item.style.borderBottom = "1px solid rgba(0,0,0,0)";
+                item.style.borderTop = "1px solid rgba(0,0,0,0)";
+              });
+              component[component.length - 1].style.borderBottom =
+                "6px solid #ccc";
+            } else {
+              component.forEach(item => {
+                item.style.borderTop = "1px solid rgba(0,0,0,0)";
+                item.style.borderBottom = "1px solid rgba(0,0,0,0)";
+              });
+              component[temIndex].style.borderTop = "8px solid #ccc";
+            }
           };
           // 鼠标松开
           document.onmouseup = () => {
+            let component = document.querySelectorAll(".container-con>div");
+            // 鼠标松开时将显示的要放置位置的提示块删除
+            component.forEach(item => {
+              item.style.borderTop = "1px solid rgba(0,0,0,0)";
+              item.style.borderBottom = "1px solid rgba(0,0,0,0)";
+            });
+            //temIndex - 要插入节点的位置
+            let temIndex = 100;
+            Array.from(component).some((el, index) => {
+              if (newEl.offsetTop < el.offsetTop) {
+                temIndex = index;
+                return true;
+              }
+            });
+            // 获取当前使用组件中 最大的id值
+            let maxId = null;
+            this.$store.state.componentList.forEach(el => {
+              if (el.id > maxId) {
+                maxId = el.id;
+              }
+            });
+            if (temIndex == 100) {
+              this.$store.state.componentList.push({
+                id: maxId + 1,
+                sub: this.$store.state.componentSub
+              });
+            } else {
+              this.$store.state.componentList.splice(temIndex, 0, {
+                id: maxId + 1,
+                sub: this.$store.state.componentSub
+              });
+            }
+            newEl.remove();
             document.onmousemove = document.onmouseup = null;
-            el.parentNode.parentNode.style.position = "relative";
-            el.parentNode.parentNode.style.top = 0;
-
-            let x = index;
-            let y = 4;
-            let arr = this.$store.state.componentList;
-            arr.splice(x, 1, ...arr.splice(y, 1, arr[x]));
+            this.upData();
           };
         };
       });
@@ -51,19 +108,21 @@ export default {
       let handleList2 = document.querySelectorAll(".handle>.handle2");
       handleList2.forEach((el, index) => {
         el.onclick = () => {
-          let newSub = el.parentNode.parentNode.getAttribute("data-sub");
-          let maxId = 1;
-          this.$store.state.componentList.forEach(el => {
+          let maxId = null;
+          let temIndex = null;
+          this.$store.state.componentList.forEach((el, index) => {
             if (el.id > maxId) {
               maxId = el.id;
             }
+            if (el.id == this.$store.state.componentId) {
+              temIndex = index;
+            }
           });
-          // console.info(maxId);
-          this.$store.state.componentList.splice(index + 1, 0, {
+          this.$store.state.componentList.splice(temIndex + 1, 0, {
             id: maxId + 1,
-            sub: newSub
+            sub: this.$store.state.componentSub
           });
-          // console.info(this.$store.state.componentList);
+          this.upData();
         };
       });
     },
@@ -72,14 +131,17 @@ export default {
       let handleList3 = document.querySelectorAll(".handle>.handle3");
       handleList3.forEach((el, index) => {
         el.onclick = () => {
-          this.upData();
-          this.$store.state.componentList.splice(index, 1);
-          console.info(this.$store.state.componentList);
+          this.$store.state.componentList.forEach((item, index) => {
+            if (item.id == this.$store.state.componentId) {
+              this.$store.state.componentList.splice(index, 1);
+            }
+          });
           this.upData();
         };
       });
     },
     upData() {
+      this.$forceUpdate();
       this.dargSub();
       this.addSub();
       this.delSub();

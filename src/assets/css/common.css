@@ -1,9 +1,6 @@
 @charset "UTF-8";
 /*css 初始化 */
 
-* {
-    box-sizing: border-box;
-}
 
 html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img {
     margin: 0;
@@ -150,6 +147,9 @@ s, i, em {
 
 /*公共部分*/
 
+* {
+    box-sizing: border-box;
+}
 .bd0 {
     border: 1px solid rgba(0, 0, 0, 0);
 }

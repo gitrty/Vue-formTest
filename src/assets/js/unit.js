@@ -1,0 +1,19 @@
+
+/* <toyo-title @click.native="edit($event)" ></toyo - title >
+  <toyo-textInput @click.native="edit($event)" ></toyo - textInput >
+    <toyo-numberInput @click.native="edit($event)" ></toyo - numberInput >
+      <toyo-dateInput @click.native="edit($event)" ></toyo - dateInput >
+        <toyo-timeInput @click.native="edit($event)" ></toyo - timeInput >
+          <toyo-prependedText @click.native="edit($event)" ></toyo - prependedText >
+            <toyo-appendedText @click.native="edit($event)" ></toyo - appendedText >
+              <toyo-textarea @click.native="edit($event)" ></toyo - textarea >
+                <toyo-selectBasic @click.native="edit($event)" ></toyo - selectBasic >
+                  <toyo-addressSelector @click.native="edit($event)" ></toyo - addressSelector >
+                    <toyo-selectMultiple @click.native="edit($event)" ></toyo - selectMultiple >
+                      <toyo-checkboxes @click.native="edit($event)" ></toyo - checkboxes >
+                        <toyo-radioButtons @click.native="edit($event)" ></toyo - radioButtons >
+                          <toyo-inlineCheckBoxes @click.native="edit($event)" ></toyo - inlineCheckBoxes >
+                            <toyo-inlineRadioButtons @click.native="edit($event)" ></toyo - inlineRadioButtons >
+                              <toyo-starRating @click.native="edit($event)" ></toyo - starRating >
+                                <toyo-fileUpload @click.native="edit($event)" ></toyo - fileUpload >
+                                  <toyo-button @click.native="edit($event)" ></toyo - button > */

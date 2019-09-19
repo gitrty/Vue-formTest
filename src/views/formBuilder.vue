@@ -21,12 +21,12 @@
       <div class="build-left-tit">部件库</div>
       <!-- select 框 -->
       <div class="snippetPicker">
-        <select id="selSnips" class="categories">
+        <select id="selSnips" class="categories" v-model="selected">
           <option value="all">all</option>
-          <option value="输入框">输入框</option>
-          <option value="列表选择">列表选择</option>
-          <option value="单选、多选">单选、多选</option>
-          <option value="文件、按钮">文件、按钮</option>
+          <option value="input">输入框</option>
+          <option value="select">列表选择</option>
+          <option value="radioCheck">单选、多选</option>
+          <option value="fileButton">文件、按钮</option>
         </select>
       </div>
 
@@ -64,29 +64,11 @@
     <!-- middle 自定义表单区域 -->
     <div class="build-container" :style="{'padding-left':pl,'padding-right':pr}">
       <div class="container-con">
-        <!-- <toyo-title @click.native="edit($event)"></toyo-title>
-        <toyo-textInput @click.native="edit($event)"></toyo-textInput>
-        <toyo-numberInput @click.native="edit($event)"></toyo-numberInput>
-        <toyo-dateInput @click.native="edit($event)"></toyo-dateInput>
-        <toyo-timeInput @click.native="edit($event)"></toyo-timeInput>
-        <toyo-prependedText @click.native="edit($event)"></toyo-prependedText>
-        <toyo-appendedText @click.native="edit($event)"></toyo-appendedText>
-        <toyo-textarea @click.native="edit($event)"></toyo-textarea>
-        <toyo-selectBasic @click.native="edit($event)"></toyo-selectBasic>
-        <toyo-addressSelector @click.native="edit($event)"></toyo-addressSelector>
-        <toyo-selectMultiple @click.native="edit($event)"></toyo-selectMultiple>
-        <toyo-checkboxes @click.native="edit($event)"></toyo-checkboxes>
-        <toyo-radioButtons @click.native="edit($event)"></toyo-radioButtons>
-        <toyo-inlineCheckBoxes @click.native="edit($event)"></toyo-inlineCheckBoxes>
-        <toyo-inlineRadioButtons @click.native="edit($event)"></toyo-inlineRadioButtons>
-        <toyo-starRating @click.native="edit($event)"></toyo-starRating>
-        <toyo-fileUpload @click.native="edit($event)"></toyo-fileUpload>
-        <toyo-button @click.native="edit($event)"></toyo-button>-->
         <component
           v-for="component in $store.state.componentList"
           :is="component.sub"
           :key="component.id"
-          @click.native="edit($event)"
+          @click.native="edit(component.id,component.sub,$event)"
         ></component>
       </div>
     </div>
@@ -103,6 +85,7 @@ export default {
       pl: "240px",
       pr: "240px",
       input: "",
+      selected: "all",
       natureObj: {},
       imgList: [
         { id: 1, src: require(`../assets/images/fl1.png`), sub: "toyo-title" },
@@ -215,7 +198,7 @@ export default {
         });
       }
     },
-    edit(ev) {
+    edit(id, sub, ev) {
       // 控制点击后边框 与 左上操作项的显示
       let currentList = document.querySelectorAll(".container-con>div");
       currentList.forEach(el => {
@@ -232,6 +215,9 @@ export default {
       if (this.panelshow) {
         ev.currentTarget.querySelector(".nature").style.display = "block";
       }
+      // 点击后添加操作选项
+      this.$store.state.componentId = id;
+      this.$store.state.componentSub = sub;
     },
     // 1 -鼠标按下
     darg(id, sub, ev) {
@@ -272,15 +258,15 @@ export default {
           // 鼠标移动时显示需要放置的位置
           if (temIndex == 100) {
             component.forEach(item => {
-              item.style.borderBottom = "none";
-              item.style.borderTop = "none";
+              item.style.borderBottom = "1px solid rgba(0,0,0,0)";
+              item.style.borderTop = "1px solid rgba(0,0,0,0)";
             });
             component[component.length - 1].style.borderBottom =
               "6px solid #ccc";
           } else {
             component.forEach(item => {
-              item.style.borderTop = "none";
-              item.style.borderBottom = "none";
+              item.style.borderTop = "1px solid rgba(0,0,0,0)";
+              item.style.borderBottom = "1px solid rgba(0,0,0,0)";
             });
             component[temIndex].style.borderTop = "8px solid #ccc";
           }
@@ -292,8 +278,8 @@ export default {
         let component = document.querySelectorAll(".container-con>div");
         // 鼠标松开时将显示的要放置位置的提示块删除
         component.forEach(item => {
-          item.style.borderTop = "none";
-          item.style.borderBottom = "none";
+          item.style.borderTop = "1px solid rgba(0,0,0,0)";
+          item.style.borderBottom = "1px solid rgba(0,0,0,0)";
         });
         // 判断是否拖拽到了表单内
         if (
@@ -322,21 +308,220 @@ export default {
           });
           if (temIndex == 100) {
             this.$store.state.componentList.push({ id: maxId + 1, sub: sub });
-            // console.info(this.$store.state.componentList);
           } else {
-            this.$store.state.componentList.splice(temIndex, 0,{
+            this.$store.state.componentList.splice(temIndex, 0, {
               id: maxId + 1,
               sub: sub
             });
           }
         }
-
         // console.info(component[17].offsetTop);
         // console.info(newDiv.offsetTop + document.documentElement.scrollTop);
 
         document.onmousemove = document.onmouseup = null;
         newDiv.remove();
       };
+    }
+  },
+  watch: {
+    selected(newd, old) {
+      switch (newd) {
+        case "all":
+          this.imgList = [
+            {
+              id: 1,
+              src: require(`../assets/images/fl1.png`),
+              sub: "toyo-title"
+            },
+            {
+              id: 2,
+              src: require(`../assets/images/fl2.png`),
+              sub: "toyo-textInput"
+            },
+            {
+              id: 3,
+              src: require(`../assets/images/fl3.png`),
+              sub: "toyo-numberInput"
+            },
+            {
+              id: 4,
+              src: require(`../assets/images/fl4.png`),
+              sub: "toyo-dateInput"
+            },
+            {
+              id: 5,
+              src: require(`../assets/images/fl5.png`),
+              sub: "toyo-timeInput"
+            },
+            {
+              id: 6,
+              src: require(`../assets/images/fl6.png`),
+              sub: "toyo-prependedText"
+            },
+            {
+              id: 7,
+              src: require(`../assets/images/fl7.png`),
+              sub: "toyo-appendedText"
+            },
+            {
+              id: 8,
+              src: require(`../assets/images/fl8.png`),
+              sub: "toyo-textarea"
+            },
+            {
+              id: 9,
+              src: require(`../assets/images/fl9.png`),
+              sub: "toyo-selectBasic"
+            },
+            {
+              id: 10,
+              src: require(`../assets/images/fl10.png`),
+              sub: "toyo-addressSelector"
+            },
+            {
+              id: 11,
+              src: require(`../assets/images/fl11.png`),
+              sub: "toyo-selectMultiple"
+            },
+            {
+              id: 12,
+              src: require(`../assets/images/fl12.png`),
+              sub: "toyo-checkboxes"
+            },
+            {
+              id: 13,
+              src: require(`../assets/images/fl13.png`),
+              sub: "toyo-radioButtons"
+            },
+            {
+              id: 14,
+              src: require(`../assets/images/fl14.png`),
+              sub: "toyo-inlineCheckBoxes"
+            },
+            {
+              id: 15,
+              src: require(`../assets/images/fl15.png`),
+              sub: "toyo-inlineRadioButtons"
+            },
+            {
+              id: 16,
+              src: require(`../assets/images/fl16.png`),
+              sub: "toyo-starRating"
+            },
+            {
+              id: 17,
+              src: require(`../assets/images/fl17.png`),
+              sub: "toyo-fileUpload"
+            },
+            {
+              id: 18,
+              src: require(`../assets/images/fl18.png`),
+              sub: "toyo-button"
+            }
+          ];
+          break;
+        case "input":
+          this.imgList = [
+            {
+              id: 2,
+              src: require(`../assets/images/fl2.png`),
+              sub: "toyo-textInput"
+            },
+            {
+              id: 3,
+              src: require(`../assets/images/fl3.png`),
+              sub: "toyo-numberInput"
+            },
+            {
+              id: 4,
+              src: require(`../assets/images/fl4.png`),
+              sub: "toyo-dateInput"
+            },
+            {
+              id: 5,
+              src: require(`../assets/images/fl5.png`),
+              sub: "toyo-timeInput"
+            },
+            {
+              id: 6,
+              src: require(`../assets/images/fl6.png`),
+              sub: "toyo-prependedText"
+            },
+            {
+              id: 7,
+              src: require(`../assets/images/fl7.png`),
+              sub: "toyo-appendedText"
+            },
+            {
+              id: 8,
+              src: require(`../assets/images/fl8.png`),
+              sub: "toyo-textarea"
+            }
+          ];
+          break;
+        case "select":
+          this.imgList = [
+            {
+              id: 9,
+              src: require(`../assets/images/fl9.png`),
+              sub: "toyo-selectBasic"
+            },
+            {
+              id: 10,
+              src: require(`../assets/images/fl10.png`),
+              sub: "toyo-addressSelector"
+            },
+            {
+              id: 11,
+              src: require(`../assets/images/fl11.png`),
+              sub: "toyo-selectMultiple"
+            }
+          ];
+          break;
+        case "radioCheck":
+          this.imgList = [
+            {
+              id: 12,
+              src: require(`../assets/images/fl12.png`),
+              sub: "toyo-checkboxes"
+            },
+            {
+              id: 13,
+              src: require(`../assets/images/fl13.png`),
+              sub: "toyo-radioButtons"
+            },
+            {
+              id: 14,
+              src: require(`../assets/images/fl14.png`),
+              sub: "toyo-inlineCheckBoxes"
+            },
+            {
+              id: 15,
+              src: require(`../assets/images/fl15.png`),
+              sub: "toyo-inlineRadioButtons"
+            },
+            {
+              id: 16,
+              src: require(`../assets/images/fl16.png`),
+              sub: "toyo-starRating"
+            }
+          ];
+          break;
+        case "fileButton":
+          this.imgList = [
+            {
+              id: 17,
+              src: require(`../assets/images/fl17.png`),
+              sub: "toyo-fileUpload"
+            },
+            {
+              id: 18,
+              src: require(`../assets/images/fl18.png`),
+              sub: "toyo-button"
+            }
+          ];
+          break;
+      }
     }
   }
 };
@@ -506,8 +691,9 @@ select {
   border-radius: 8px;
   padding: 36px 26px;
   > div {
+    border: 1px solid rgba(0, 0, 0, 0);
     &:hover {
-      border: 1px dashed #f1cdac;
+      border: 1px dashed #f1cdac !important;
     }
   }
 }

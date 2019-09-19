@@ -24,7 +24,9 @@ export default new Vuex.Store({
       { id: 16, sub: 'toyo-starRating' },
       { id: 17, sub: 'toyo-fileUpload' },
       { id: 18, sub: 'toyo-button' }
-    ]
+    ],
+    componentId: null,
+    componentSub: null
   },
   mutations: {
 
@@ -33,7 +35,7 @@ export default new Vuex.Store({
 
   },
   getters: {
-    maxId(state){
+    maxId(state) {
       // state.componentList.for
       // return
     }
