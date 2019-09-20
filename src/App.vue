@@ -6,9 +6,6 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   mounted() {
     this.upData();
   },
@@ -100,12 +97,12 @@ export default {
             }
             newEl.remove();
             document.onmousemove = document.onmouseup = null;
-            this.upData();
+            // this.upData();
           };
         };
       });
     },
-    // 2 - 复制该组件
+    // 2 - 新增该组件
     addSub() {
       let handleList2 = document.querySelectorAll(".handle>.handle2");
       handleList2.forEach((el, index) => {
@@ -124,7 +121,7 @@ export default {
             id: maxId + 1,
             sub: this.$store.state.componentSub
           });
-          this.upData();
+          // this.upData();
         };
       });
     },
@@ -138,12 +135,11 @@ export default {
               this.$store.state.componentList.splice(index, 1);
             }
           });
-          this.upData();
+          // this.upData();
         };
       });
     },
     upData() {
-      this.$forceUpdate();
       this.dargSub();
       this.addSub();
       this.delSub();
@@ -156,9 +152,18 @@ export default {
     }
   },
   watch: {
-    subList(old, newd) {
-      this.upData();
+    subList: {
+      handler(newName, oldName) {
+        this.upData();
+      },
+      immediate: true,
+      deep: true
     }
+  },
+  updated() {
+    this.dargSub();
+    this.addSub();
+    this.delSub();
   }
 };
 </script>
