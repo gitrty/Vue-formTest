@@ -40,6 +40,8 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.name == 'formPreview') {
     document.body.style.background = "#bae3f9"
+  } else if (to.name == 'formBuilder') {
+    document.body.style.background = "#eeeeee"
   } else {
     document.body.style.background = "#f9f9f9"
   }
