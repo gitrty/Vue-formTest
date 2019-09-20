@@ -1,8 +1,8 @@
 <template>
   <div class="formBuilder">
-    <!-- top -->
+    <!-- top - 保存模板 -->
     <div class="build-top">
-      <button @click="addform">
+      <button @click="$path('/formPreview')">
         <i class="el-icon-finished"></i>
         保存
       </button>
@@ -30,19 +30,19 @@
         </select>
       </div>
 
-      <!-- 左侧 组件 -->
+      <!-- 左侧 组件选项栏 -->
       <div class="snippetList">
         <div
           class="ui-draggable"
           v-for="item in imgList"
           :key="item.id"
-          @mousedown.prevent="darg(item.id,item.sub,$event)"
+          @mousedown.prevent="darg(item.id,item.sub,item.opt,$event)"
         >
           <img :src="item.src" />
         </div>
       </div>
 
-      <!-- 显示/隐藏 -->
+      <!-- 左侧显示/隐藏 -->
       <div class="showhid" @click="tabNav">
         <i :class="[navshow?'el-icon-arrow-left':'el-icon-arrow-right']"></i>
       </div>
@@ -55,7 +55,7 @@
       <!-- 组件属性 -->
       <div class="build-right-con"></div>
 
-      <!-- 显示/隐藏 -->
+      <!-- 右侧显示/隐藏 -->
       <div class="showhid2" @click="tabNav2">
         <i :class="[panelshow?'el-icon-arrow-right':'el-icon-arrow-left']"></i>
       </div>
@@ -69,7 +69,7 @@
           :is="component.sub"
           :key="component.id"
           :opt="component.opt"
-          @click.native="edit(component.id,component.sub,$event)"
+          @click.native="edit(component.id,component.sub,component.opt,$event)"
         ></component>
       </div>
     </div>
@@ -89,91 +89,271 @@ export default {
       selected: "all",
       natureObj: {},
       imgList: [
-        { id: 1, src: require(`../assets/images/fl1.png`), sub: "toyo-title" },
+        {
+          id: 1,
+          src: require(`../assets/images/fl1.png`),
+          sub: "toyo-title",
+          opt: {
+            title: "什么什么活动报名表",
+            help: "请如实填写,如有弄虚作假取消参与资格"
+          }
+        },
         {
           id: 2,
           src: require(`../assets/images/fl2.png`),
-          sub: "toyo-textInput"
+          sub: "toyo-textInput",
+          opt: {
+            title: "Text Input:",
+            textInput: "placeholdel",
+            help: "填写帮助",
+            checked: false
+          }
         },
         {
           id: 3,
           src: require(`../assets/images/fl3.png`),
-          sub: "toyo-numberInput"
+          sub: "toyo-numberInput",
+          opt: {
+            title: "Number Input:",
+            num: "",
+            help: "填写帮助",
+            checked: false
+          }
         },
         {
           id: 4,
           src: require(`../assets/images/fl4.png`),
-          sub: "toyo-dateInput"
+          sub: "toyo-dateInput",
+          opt: {
+            title: "Date Input:",
+            num: "",
+            help: "填写帮助",
+            checked: false
+          }
         },
         {
           id: 5,
           src: require(`../assets/images/fl5.png`),
-          sub: "toyo-timeInput"
+          sub: "toyo-timeInput",
+          opt: {
+            title: "Time Input:",
+            num: "",
+            help: "填写帮助",
+            checked: false
+          }
         },
         {
           id: 6,
           src: require(`../assets/images/fl6.png`),
-          sub: "toyo-prependedText"
+          sub: "toyo-prependedText",
+          opt: {
+            title: "Prepended:",
+            tipInput: "^_^",
+            textInput: "placeholdel",
+            help: "填写帮助",
+            checked: false,
+            input1: ""
+          }
         },
         {
           id: 7,
           src: require(`../assets/images/fl7.png`),
-          sub: "toyo-appendedText"
+          sub: "toyo-appendedText",
+          opt: {
+            title: "Appended:",
+            tipInput: "^_^",
+            textInput: "placeholdel",
+            help: "填写帮助",
+            checked: false,
+            input1: ""
+          }
         },
         {
           id: 8,
           src: require(`../assets/images/fl8.png`),
-          sub: "toyo-textarea"
+          sub: "toyo-textarea",
+          opt: {
+            title: "textarea:",
+            textInput: "placeholdel",
+            textarea: "",
+            help: "最多140个字符",
+            checked: false,
+            maxText: 140
+          }
         },
         {
           id: 9,
           src: require(`../assets/images/fl9.png`),
-          sub: "toyo-selectBasic"
+          sub: "toyo-selectBasic",
+          opt: {
+            title: "SelectBasic:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n",
+            options: [
+              {
+                label: "黄金糕"
+              },
+              {
+                label: "双皮奶"
+              }
+            ],
+            value: ""
+          }
         },
         {
           id: 10,
           src: require(`../assets/images/fl10.png`),
-          sub: "toyo-addressSelector"
+          sub: "toyo-addressSelector",
+          opt: {
+            title: "Address:",
+            textInput: "placeholdel",
+            help: "填写帮助",
+            options: [
+              {
+                label: "黄金糕"
+              },
+              {
+                label: "双皮奶"
+              }
+            ],
+            value: ""
+          }
         },
         {
           id: 11,
           src: require(`../assets/images/fl11.png`),
-          sub: "toyo-selectMultiple"
+          sub: "toyo-selectMultiple",
+          opt: {
+            title: "selectMultiple:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n"
+          }
         },
         {
           id: 12,
           src: require(`../assets/images/fl12.png`),
-          sub: "toyo-checkboxes"
+          sub: "toyo-checkboxes",
+          opt: {
+            title: "checkboxes:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n",
+            options: [
+              {
+                label: "黄金糕"
+              }
+            ],
+            nodelist: [],
+            value: ""
+          }
         },
         {
           id: 13,
           src: require(`../assets/images/fl13.png`),
-          sub: "toyo-radioButtons"
+          sub: "toyo-radioButtons",
+          opt: {
+            title: "radioButtons:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n",
+            options: [
+              {
+                label: "黄金糕"
+              }
+            ],
+            nodelist: [],
+            radio: 1
+          }
         },
         {
           id: 14,
           src: require(`../assets/images/fl14.png`),
-          sub: "toyo-inlineCheckBoxes"
+          sub: "toyo-inlineCheckBoxes",
+          opt: {
+            title: "inlinecheck:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n",
+            options: [
+              {
+                label: "黄金糕"
+              }
+            ],
+            nodelist: [],
+            value: ""
+          }
         },
         {
           id: 15,
           src: require(`../assets/images/fl15.png`),
-          sub: "toyo-inlineRadioButtons"
+          sub: "toyo-inlineRadioButtons",
+          opt: {
+            title: "inlineRadio:",
+            textInput: "placeholdel",
+            selectAll: "qwe\nasd\nzxc\n",
+            options: [
+              {
+                label: "黄金糕"
+              }
+            ],
+            nodelist: [],
+            radio: 1
+          }
         },
         {
           id: 16,
           src: require(`../assets/images/fl16.png`),
-          sub: "toyo-starRating"
+          sub: "toyo-starRating",
+          opt: {
+            title: "starRating:",
+            help: "填写帮助",
+            value1: null
+          }
         },
         {
           id: 17,
           src: require(`../assets/images/fl17.png`),
-          sub: "toyo-fileUpload"
+          sub: "toyo-fileUpload",
+          opt: {
+            title: "fileUpload:",
+            help: "填写帮助",
+            fileList: []
+          }
         },
         {
           id: 18,
           src: require(`../assets/images/fl18.png`),
-          sub: "toyo-button"
+          sub: "toyo-button",
+          opt: {
+            title: "",
+            textInput: "submit",
+            help: "风格",
+            tabq: "primary",
+            options: [
+              {
+                value: "",
+                label: "default"
+              },
+              {
+                value: "1",
+                label: "primary"
+              },
+              {
+                value: "2",
+                label: "success"
+              },
+              {
+                value: "3",
+                label: "info"
+              },
+              {
+                value: "4",
+                label: "warning"
+              },
+              {
+                value: "5",
+                label: "danger"
+              }
+            ],
+            value: ""
+          }
         }
       ]
     };
@@ -199,7 +379,7 @@ export default {
         });
       }
     },
-    edit(id, sub, ev) {
+    edit(id, sub,opt, ev) {
       // 控制点击后边框 与 左上操作项的显示
       let currentList = document.querySelectorAll(".container-con>div");
       currentList.forEach(el => {
@@ -219,9 +399,10 @@ export default {
       // 点击后添加操作选项
       this.$store.state.componentId = id;
       this.$store.state.componentSub = sub;
+      this.$store.state.componentOpt = opt;
     },
     // 1 -鼠标按下
-    darg(id, sub, ev) {
+    darg(id, sub, opt, ev) {
       let newDiv = document.createElement("div");
       newDiv.style.width = "180px";
       newDiv.style.height = "50px";
@@ -308,11 +489,16 @@ export default {
             }
           });
           if (temIndex == 100) {
-            this.$store.state.componentList.push({ id: maxId + 1, sub: sub });
+            this.$store.state.componentList.push({
+              id: maxId + 1,
+              sub: sub,
+              opt: opt
+            });
           } else {
             this.$store.state.componentList.splice(temIndex, 0, {
               id: maxId + 1,
-              sub: sub
+              sub: sub,
+              opt: opt
             });
           }
         }
@@ -322,11 +508,6 @@ export default {
         document.onmousemove = document.onmouseup = null;
         newDiv.remove();
       };
-    },
-    // 保存表单
-    addform() {
-      let form = document.querySelector(".container-con");
-      // this.$path("/formPreview");
     }
   },
   watch: {
@@ -337,92 +518,268 @@ export default {
             {
               id: 1,
               src: require(`../assets/images/fl1.png`),
-              sub: "toyo-title"
+              sub: "toyo-title",
+              opt: {
+                title: "什么什么活动报名表",
+                help: "请如实填写,如有弄虚作假取消参与资格"
+              }
             },
             {
               id: 2,
               src: require(`../assets/images/fl2.png`),
-              sub: "toyo-textInput"
+              sub: "toyo-textInput",
+              opt: {
+                title: "Text Input:",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 3,
               src: require(`../assets/images/fl3.png`),
-              sub: "toyo-numberInput"
+              sub: "toyo-numberInput",
+              opt: {
+                title: "Number Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 4,
               src: require(`../assets/images/fl4.png`),
-              sub: "toyo-dateInput"
+              sub: "toyo-dateInput",
+              opt: {
+                title: "Date Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 5,
               src: require(`../assets/images/fl5.png`),
-              sub: "toyo-timeInput"
+              sub: "toyo-timeInput",
+              opt: {
+                title: "Time Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 6,
               src: require(`../assets/images/fl6.png`),
-              sub: "toyo-prependedText"
+              sub: "toyo-prependedText",
+              opt: {
+                title: "Prepended:",
+                tipInput: "^_^",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false,
+                input1: ""
+              }
             },
             {
               id: 7,
               src: require(`../assets/images/fl7.png`),
-              sub: "toyo-appendedText"
+              sub: "toyo-appendedText",
+              opt: {
+                title: "Appended:",
+                tipInput: "^_^",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false,
+                input1: ""
+              }
             },
             {
               id: 8,
               src: require(`../assets/images/fl8.png`),
-              sub: "toyo-textarea"
+              sub: "toyo-textarea",
+              opt: {
+                title: "textarea:",
+                textInput: "placeholdel",
+                textarea: "",
+                help: "最多140个字符",
+                checked: false,
+                maxText: 140
+              }
             },
             {
               id: 9,
               src: require(`../assets/images/fl9.png`),
-              sub: "toyo-selectBasic"
+              sub: "toyo-selectBasic",
+              opt: {
+                title: "SelectBasic:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  },
+                  {
+                    label: "双皮奶"
+                  }
+                ],
+                value: ""
+              }
             },
             {
               id: 10,
               src: require(`../assets/images/fl10.png`),
-              sub: "toyo-addressSelector"
+              sub: "toyo-addressSelector",
+              opt: {
+                title: "Address:",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                options: [
+                  {
+                    label: "黄金糕"
+                  },
+                  {
+                    label: "双皮奶"
+                  }
+                ],
+                value: ""
+              }
             },
             {
               id: 11,
               src: require(`../assets/images/fl11.png`),
-              sub: "toyo-selectMultiple"
+              sub: "toyo-selectMultiple",
+              opt: {
+                title: "selectMultiple:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n"
+              }
             },
             {
               id: 12,
               src: require(`../assets/images/fl12.png`),
-              sub: "toyo-checkboxes"
+              sub: "toyo-checkboxes",
+              opt: {
+                title: "checkboxes:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                value: ""
+              }
             },
             {
               id: 13,
               src: require(`../assets/images/fl13.png`),
-              sub: "toyo-radioButtons"
+              sub: "toyo-radioButtons",
+              opt: {
+                title: "radioButtons:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                radio: 1
+              }
             },
             {
               id: 14,
               src: require(`../assets/images/fl14.png`),
-              sub: "toyo-inlineCheckBoxes"
+              sub: "toyo-inlineCheckBoxes",
+              opt: {
+                title: "inlinecheck:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                value: ""
+              }
             },
             {
               id: 15,
               src: require(`../assets/images/fl15.png`),
-              sub: "toyo-inlineRadioButtons"
+              sub: "toyo-inlineRadioButtons",
+              opt: {
+                title: "inlineRadio:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                radio: 1
+              }
             },
             {
               id: 16,
               src: require(`../assets/images/fl16.png`),
-              sub: "toyo-starRating"
+              sub: "toyo-starRating",
+              opt: {
+                title: "starRating:",
+                help: "填写帮助",
+                value1: null
+              }
             },
             {
               id: 17,
               src: require(`../assets/images/fl17.png`),
-              sub: "toyo-fileUpload"
+              sub: "toyo-fileUpload",
+              opt: {
+                title: "fileUpload:",
+                help: "填写帮助",
+                fileList: []
+              }
             },
             {
               id: 18,
               src: require(`../assets/images/fl18.png`),
-              sub: "toyo-button"
+              sub: "toyo-button",
+              opt: {
+                title: "",
+                textInput: "submit",
+                help: "风格",
+                tabq: "primary",
+                options: [
+                  {
+                    value: "",
+                    label: "default"
+                  },
+                  {
+                    value: "1",
+                    label: "primary"
+                  },
+                  {
+                    value: "2",
+                    label: "success"
+                  },
+                  {
+                    value: "3",
+                    label: "info"
+                  },
+                  {
+                    value: "4",
+                    label: "warning"
+                  },
+                  {
+                    value: "5",
+                    label: "danger"
+                  }
+                ],
+                value: ""
+              }
             }
           ];
           break;
@@ -431,37 +788,85 @@ export default {
             {
               id: 2,
               src: require(`../assets/images/fl2.png`),
-              sub: "toyo-textInput"
+              sub: "toyo-textInput",
+              opt: {
+                title: "Text Input:",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 3,
               src: require(`../assets/images/fl3.png`),
-              sub: "toyo-numberInput"
+              sub: "toyo-numberInput",
+              opt: {
+                title: "Number Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 4,
               src: require(`../assets/images/fl4.png`),
-              sub: "toyo-dateInput"
+              sub: "toyo-dateInput",
+              opt: {
+                title: "Date Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 5,
               src: require(`../assets/images/fl5.png`),
-              sub: "toyo-timeInput"
+              sub: "toyo-timeInput",
+              opt: {
+                title: "Time Input:",
+                num: "",
+                help: "填写帮助",
+                checked: false
+              }
             },
             {
               id: 6,
               src: require(`../assets/images/fl6.png`),
-              sub: "toyo-prependedText"
+              sub: "toyo-prependedText",
+              opt: {
+                title: "Prepended:",
+                tipInput: "^_^",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false,
+                input1: ""
+              }
             },
             {
               id: 7,
               src: require(`../assets/images/fl7.png`),
-              sub: "toyo-appendedText"
+              sub: "toyo-appendedText",
+              opt: {
+                title: "Appended:",
+                tipInput: "^_^",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                checked: false,
+                input1: ""
+              }
             },
             {
               id: 8,
               src: require(`../assets/images/fl8.png`),
-              sub: "toyo-textarea"
+              sub: "toyo-textarea",
+              opt: {
+                title: "textarea:",
+                textInput: "placeholdel",
+                textarea: "",
+                help: "最多140个字符",
+                checked: false,
+                maxText: 140
+              }
             }
           ];
           break;
@@ -470,17 +875,50 @@ export default {
             {
               id: 9,
               src: require(`../assets/images/fl9.png`),
-              sub: "toyo-selectBasic"
+              sub: "toyo-selectBasic",
+              opt: {
+                title: "SelectBasic:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  },
+                  {
+                    label: "双皮奶"
+                  }
+                ],
+                value: ""
+              }
             },
             {
               id: 10,
               src: require(`../assets/images/fl10.png`),
-              sub: "toyo-addressSelector"
+              sub: "toyo-addressSelector",
+              opt: {
+                title: "Address:",
+                textInput: "placeholdel",
+                help: "填写帮助",
+                options: [
+                  {
+                    label: "黄金糕"
+                  },
+                  {
+                    label: "双皮奶"
+                  }
+                ],
+                value: ""
+              }
             },
             {
               id: 11,
               src: require(`../assets/images/fl11.png`),
-              sub: "toyo-selectMultiple"
+              sub: "toyo-selectMultiple",
+              opt: {
+                title: "selectMultiple:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n"
+              }
             }
           ];
           break;
@@ -489,27 +927,80 @@ export default {
             {
               id: 12,
               src: require(`../assets/images/fl12.png`),
-              sub: "toyo-checkboxes"
+              sub: "toyo-checkboxes",
+              opt: {
+                title: "checkboxes:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                value: ""
+              }
             },
             {
               id: 13,
               src: require(`../assets/images/fl13.png`),
-              sub: "toyo-radioButtons"
+              sub: "toyo-radioButtons",
+              opt: {
+                title: "radioButtons:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                radio: 1
+              }
             },
             {
               id: 14,
               src: require(`../assets/images/fl14.png`),
-              sub: "toyo-inlineCheckBoxes"
+              sub: "toyo-inlineCheckBoxes",
+              opt: {
+                title: "inlinecheck:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                value: ""
+              }
             },
             {
               id: 15,
               src: require(`../assets/images/fl15.png`),
-              sub: "toyo-inlineRadioButtons"
+              sub: "toyo-inlineRadioButtons",
+              opt: {
+                title: "inlineRadio:",
+                textInput: "placeholdel",
+                selectAll: "qwe\nasd\nzxc\n",
+                options: [
+                  {
+                    label: "黄金糕"
+                  }
+                ],
+                nodelist: [],
+                radio: 1
+              }
             },
             {
               id: 16,
               src: require(`../assets/images/fl16.png`),
-              sub: "toyo-starRating"
+              sub: "toyo-starRating",
+              opt: {
+                title: "starRating:",
+                help: "填写帮助",
+                value1: null
+              }
             }
           ];
           break;
@@ -518,12 +1009,50 @@ export default {
             {
               id: 17,
               src: require(`../assets/images/fl17.png`),
-              sub: "toyo-fileUpload"
+              sub: "toyo-fileUpload",
+              opt: {
+                title: "fileUpload:",
+                help: "填写帮助",
+                fileList: []
+              }
             },
             {
               id: 18,
               src: require(`../assets/images/fl18.png`),
-              sub: "toyo-button"
+              sub: "toyo-button",
+              opt: {
+                title: "",
+                textInput: "submit",
+                help: "风格",
+                tabq: "primary",
+                options: [
+                  {
+                    value: "",
+                    label: "default"
+                  },
+                  {
+                    value: "1",
+                    label: "primary"
+                  },
+                  {
+                    value: "2",
+                    label: "success"
+                  },
+                  {
+                    value: "3",
+                    label: "info"
+                  },
+                  {
+                    value: "4",
+                    label: "warning"
+                  },
+                  {
+                    value: "5",
+                    label: "danger"
+                  }
+                ],
+                value: ""
+              }
             }
           ];
           break;

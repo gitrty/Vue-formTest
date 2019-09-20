@@ -88,12 +88,14 @@ export default {
             if (temIndex == 100) {
               this.$store.state.componentList.push({
                 id: maxId + 1,
-                sub: this.$store.state.componentSub
+                sub: this.$store.state.componentSub,
+                opt: this.$store.state.componentOpt
               });
             } else {
               this.$store.state.componentList.splice(temIndex, 0, {
                 id: maxId + 1,
-                sub: this.$store.state.componentSub
+                sub: this.$store.state.componentSub,
+                opt: this.$store.state.componentOpt
               });
             }
             newEl.remove();

@@ -1,7 +1,6 @@
 @charset "UTF-8";
 /*css 初始化 */
 
-
 html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img {
     margin: 0;
     padding: 0;
@@ -149,14 +148,4 @@ s, i, em {
 
 * {
     box-sizing: border-box;
-}
-.bd0 {
-    border: 1px solid rgba(0, 0, 0, 0);
-}
-
-.bd1 {
-    border: 1px solid #f1cdac !important;
-}
-.handle{
-    z-index: 40;
 }

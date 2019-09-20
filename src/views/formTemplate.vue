@@ -7,12 +7,12 @@
         <option value="常用">常用</option>
       </select>
       <ul class="sideNavigation">
-        <li>
+        <li @click="$path('/formTemplate/yjdy')">
           <a href="javascript:void(0);" class>
             <b>邮件订阅</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/yjfk')">
           <a href="javascript:void(0);" class>
             <b>意见反馈</b>
           </a>
@@ -170,7 +170,6 @@ ul.sideNavigation {
 .con-tem {
   margin-left: 200px;
   width: calc(100% - 200px);
-  // height: 100px;
   background-color: #f9f9f9;
 }
 .con-tem-top {
@@ -187,5 +186,8 @@ ul.sideNavigation {
   left: 50%;
   margin-top: -16px;
   margin-left: -46px;
+}
+.con-tem-container {
+  margin-top: 40px;
 }
 </style>

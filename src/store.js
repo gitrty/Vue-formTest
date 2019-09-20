@@ -215,7 +215,9 @@ export default new Vuex.Store({
       }
     ],
     componentId: null,
-    componentSub: null
+    componentSub: null,
+    componentOpt: null,
+    systemList: []
   },
   mutations: {
 
