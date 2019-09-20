@@ -10,9 +10,10 @@ export default new Vuex.Store({
       {
         id: 2, sub: 'toyo-textInput', opt: {
           title: "Text Input:",
+          input: "",
           textInput: "placeholdel",
           help: "填写帮助",
-          checked: false
+          checked: true
         }
       },
       {
@@ -88,6 +89,7 @@ export default new Vuex.Store({
       {
         id: 10, sub: 'toyo-addressSelector', opt: {
           title: "Address:",
+          input: "",
           textInput: "placeholdel",
           help: "填写帮助",
           options: [
@@ -226,9 +228,6 @@ export default new Vuex.Store({
 
   },
   getters: {
-    maxId(state) {
-      // state.componentList.for
-      // return
-    }
+
   }
 })

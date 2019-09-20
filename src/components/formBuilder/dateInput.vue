@@ -2,9 +2,19 @@
   <div class="toyo-dateInput" data-sub="toyo-dateInput">
     <div class="cont">
       <p>{{opt.title}}</p>
-      <el-date-picker v-model="opt.num" type="date" placeholder="选择日期" size="small"></el-date-picker>
+      <el-date-picker
+        v-model="opt.num"
+        type="date"
+        placeholder="选择日期"
+        size="small"
+        @focus="focus"
+        @blur="blur"
+      ></el-date-picker>
     </div>
-    <div class="help">{{opt.help}}</div>
+    <div class="isChecked" v-if="opt.checked">
+      <span v-show="showhid">· 不能为空</span>
+    </div>
+    <div class="help" v-show="showhid">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -43,6 +53,19 @@ export default {
           checked: false
         };
       }
+    }
+  },
+  data() {
+    return {
+      showhid: false
+    };
+  },
+  methods: {
+    focus() {
+      this.opt.num ? (this.showhid = false) : (this.showhid = true);
+    },
+    blur() {
+      this.opt.num ? (this.showhid = false) : (this.showhid = true);
     }
   }
 };

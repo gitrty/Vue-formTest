@@ -3,12 +3,14 @@
     <div class="user-forms">
       <div class="user-top"></div>
       <div class="user-con">
-        <component
-          v-for="component in $store.state.componentList"
-          :is="component.sub"
-          :key="component.id"
-          :opt="component.opt"
-        ></component>
+        <form action="#" id="formSubmit">
+          <component
+            v-for="component in $store.state.componentList"
+            :is="component.sub"
+            :key="component.id"
+            :opt="component.opt"
+          ></component>
+        </form>
       </div>
     </div>
   </div>
@@ -16,7 +18,37 @@
 
 <script>
 export default {
-  mounted() {},
+  mounted() {
+    document.getElementById("formSubmit").onsubmit = () => {
+      let flag = true;
+      this.$store.state.componentList.forEach((item, index) => {
+        if (item.opt.checked) {
+          if (
+            !item.opt.input &&
+            !item.opt.num &&
+            !item.opt.input1 &&
+            !item.opt.textarea
+          ) {
+            flag = false;
+            document
+              .getElementById("formSubmit")
+              .children[index].querySelector(".isChecked>span").style.display =
+              "block";
+          }
+        }
+      });
+      if (flag) {
+        this.$alert("提交成功", "提示", {
+          confirmButtonText: "确定",
+          callback: action => {}
+        });
+      } else {
+        this.$message("请完善表格");
+      }
+
+      return false;
+    };
+  },
   methods: {}
 };
 </script>

@@ -10,7 +10,7 @@
         <i class="el-icon-finished"></i>
         保存为模板
       </button>
-      <button>
+      <button @click="$path('/formTemplate')">
         <i class="el-icon-setting"></i>
         表单设置
       </button>
@@ -104,6 +104,7 @@ export default {
           sub: "toyo-textInput",
           opt: {
             title: "Text Input:",
+            input: "",
             textInput: "placeholdel",
             help: "填写帮助",
             checked: false
@@ -206,6 +207,7 @@ export default {
           sub: "toyo-addressSelector",
           opt: {
             title: "Address:",
+            input: "",
             textInput: "placeholdel",
             help: "填写帮助",
             options: [
@@ -379,7 +381,7 @@ export default {
         });
       }
     },
-    edit(id, sub,opt, ev) {
+    edit(id, sub, opt, ev) {
       // 控制点击后边框 与 左上操作项的显示
       let currentList = document.querySelectorAll(".container-con>div");
       currentList.forEach(el => {
@@ -421,6 +423,7 @@ export default {
         // 判断是否拖拽到了表单内
         let parentNode = document.querySelector(".container-con");
         let component = document.querySelectorAll(".container-con>div");
+        if (component.length == 0) return;
         if (
           newDiv.offsetLeft >= parentNode.offsetLeft &&
           newDiv.offsetLeft + newDiv.offsetWidth <=
@@ -528,6 +531,7 @@ export default {
               id: 2,
               src: require(`../assets/images/fl2.png`),
               sub: "toyo-textInput",
+              input: "",
               opt: {
                 title: "Text Input:",
                 textInput: "placeholdel",
@@ -629,9 +633,11 @@ export default {
             {
               id: 10,
               src: require(`../assets/images/fl10.png`),
+              input: "",
               sub: "toyo-addressSelector",
               opt: {
                 title: "Address:",
+                input: "",
                 textInput: "placeholdel",
                 help: "填写帮助",
                 options: [
@@ -789,6 +795,7 @@ export default {
               id: 2,
               src: require(`../assets/images/fl2.png`),
               sub: "toyo-textInput",
+              input: "",
               opt: {
                 title: "Text Input:",
                 textInput: "placeholdel",
@@ -897,6 +904,7 @@ export default {
               sub: "toyo-addressSelector",
               opt: {
                 title: "Address:",
+                input: "",
                 textInput: "placeholdel",
                 help: "填写帮助",
                 options: [

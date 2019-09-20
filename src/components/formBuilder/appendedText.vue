@@ -3,11 +3,21 @@
     <div class="cont">
       <p>{{opt.title}}</p>
       <!-- <input type="text" :placeholder="textInput" /> -->
-      <el-input :placeholder="opt.textInput" v-model="opt.input1" size="small" style="width:70%">
+      <el-input
+        :placeholder="opt.textInput"
+        v-model="opt.input1"
+        size="small"
+        style="width:70%"
+        @input="isChecked"
+        @focus="isChecked"
+      >
         <template slot="append">{{opt.tipInput}}</template>
       </el-input>
     </div>
-    <div class="help">{{opt.help}}</div>
+    <div class="isChecked" v-if="opt.checked">
+      <span v-show="showhid">· 不能为空</span>
+    </div>
+    <div class="help" v-show="showhid">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -52,6 +62,16 @@ export default {
           input1: ""
         };
       }
+    }
+  },
+  data() {
+    return {
+      showhid: false
+    };
+  },
+  methods: {
+    isChecked(ev) {
+      ev.length > 0 ? (this.showhid = false) : (this.showhid = true);
     }
   }
 };

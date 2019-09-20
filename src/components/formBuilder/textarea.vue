@@ -9,7 +9,12 @@
         :placeholder="opt.textInput"
         v-model="opt.textarea"
         style="width:70%"
+        @input="isChecked"
+        @focus="isChecked"
       ></el-input>
+    </div>
+    <div class="isChecked" v-if="opt.checked">
+      <span v-show="showhid">· 不能为空</span>
     </div>
     <div class="help">{{opt.help}}</div>
 
@@ -56,6 +61,16 @@ export default {
           maxText: 140
         };
       }
+    }
+  },
+  data() {
+    return {
+      showhid: false
+    };
+  },
+  methods: {
+    isChecked(ev) {
+      ev.length > 0 ? (this.showhid = false) : (this.showhid = true);
     }
   }
 };

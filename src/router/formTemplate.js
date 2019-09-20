@@ -19,6 +19,7 @@ export default [
           sub: "toyo-textInput",
           opt: {
             title: "您的Email地址:",
+            input: "",
             textInput: "xxxxx@qq.com",
             help: "建议用QQ邮箱或网易邮箱",
             checked: false
@@ -93,6 +94,7 @@ export default [
         {
           id: 2,
           sub: "toyo-textInput",
+          input: "",
           opt: {
             title: "您的Email地址:",
             textInput: "xxxxx@qq.com",

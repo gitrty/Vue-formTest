@@ -30,7 +30,7 @@
         ></el-option>
       </el-select>
       <div class="add-ipt">
-        <el-input :placeholder="opt.textInput" style="width:70%" size="small"></el-input>
+        <el-input :placeholder="opt.textInput" v-model="opt.input" style="width:70%" size="small"></el-input>
       </div>
     </div>
     <div class="help">{{opt.help}}</div>
@@ -65,6 +65,7 @@ export default {
         return {
           title: "Address:",
           textInput: "placeholdel",
+          input: "",
           help: "填写帮助",
           options: [
             {

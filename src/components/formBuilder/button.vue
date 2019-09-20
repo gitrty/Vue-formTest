@@ -2,7 +2,7 @@
   <div class="toyo-button" data-sub="toyo-button">
     <div class="cont">
       <p>{{opt.title}}</p>
-      <el-button :type="opt.tabq" size="small">{{opt.textInput}}</el-button>
+      <el-button :type="opt.tabq" size="small" native-type="submit">{{opt.textInput}}</el-button>
     </div>
 
     <div class="handle">

@@ -2,9 +2,12 @@
   <div class="toyo-numberInput" data-sub="toyo-numberInput">
     <div class="cont">
       <p>{{opt.title}}</p>
-      <input type="number" v-model="opt.num" />
+      <input type="number" v-model="opt.num" @input="isChecked" @focus="isChecked" />
     </div>
-    <div class="help">{{opt.help}}</div>
+    <div class="isChecked" v-if="opt.checked">
+      <span v-show="showhid">· 不能为空</span>
+    </div>
+    <div class="help" v-show="showhid">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -43,6 +46,18 @@ export default {
           checked: false
         };
       }
+    }
+  },
+  data() {
+    return {
+      showhid: false
+    };
+  },
+  methods: {
+    isChecked(ev) {
+      ev.currentTarget.value.length > 0
+        ? (this.showhid = false)
+        : (this.showhid = true);
     }
   }
 };

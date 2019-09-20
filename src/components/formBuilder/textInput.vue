@@ -2,9 +2,19 @@
   <div class="toyo-textInput" data-sub="toyo-textInput">
     <div class="cont">
       <p>{{opt.title}}</p>
-      <el-input :placeholder="opt.textInput" style="width:70%" size="small"></el-input>
+      <el-input
+        :placeholder="opt.textInput"
+        v-model="opt.input"
+        style="width:70%"
+        size="small"
+        @input="isChecked"
+        @focus="isChecked"
+      ></el-input>
     </div>
-    <div class="help">{{opt.help}}</div>
+    <div class="isChecked" v-if="opt.checked">
+      <span v-show="showhid">· 不能为空</span>
+    </div>
+    <div class="help" v-show="showhid">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -41,13 +51,23 @@ export default {
         return {
           title: "Text Input:",
           textInput: "placeholdel",
+          input: "",
           help: "填写帮助",
           checked: false
         };
       }
     }
   },
-  methods: {}
+  data() {
+    return {
+      showhid: false
+    };
+  },
+  methods: {
+    isChecked(ev) {
+      ev.length > 0 ? (this.showhid = false) : (this.showhid = true);
+    }
+  }
 };
 </script>
 
@@ -84,4 +104,5 @@ export default {
   font-size: 14px;
   margin-top: 4px;
 }
+
 </style>
