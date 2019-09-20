@@ -1,13 +1,13 @@
 <template>
   <div class="toyo-appendedText" data-sub="toyo-appendedText">
     <div class="cont">
-      <p>{{title}}</p>
+      <p>{{opt.title}}</p>
       <!-- <input type="text" :placeholder="textInput" /> -->
-      <el-input :placeholder="textInput" v-model="input1" size="small" style="width:70%">
-        <template slot="append">{{tipInput}}</template>
+      <el-input :placeholder="opt.textInput" v-model="opt.input1" size="small" style="width:70%">
+        <template slot="append">{{opt.tipInput}}</template>
       </el-input>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -23,15 +23,15 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>附加文字:</p>
-      <input type="text" v-model="tipInput" />
+      <input type="text" v-model="opt.tipInput" />
       <p>描述文字:</p>
-      <input type="text" v-model="textInput" />
+      <input type="text" v-model="opt.textInput" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
       <p>
-        <input type="checkbox" v-model="checked" /> 这个是必填项
+        <input type="checkbox" v-model="opt.checked" /> 这个是必填项
       </p>
     </div>
   </div>
@@ -39,17 +39,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: "Appended:",
-      tipInput: "^_^",
-      textInput: "placeholdel",
-      help: "填写帮助",
-      checked: false,
-      input1: ""
-    };
-  },
-  methods: {}
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "Appended:",
+          tipInput: "^_^",
+          textInput: "placeholdel",
+          help: "填写帮助",
+          checked: false,
+          input1: ""
+        };
+      }
+    }
+  }
 };
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <div class="toyo-selectBasic" data-sub="toyo-selectBasic">
     <div class="cont">
-      <p>{{title}}</p>
-      <el-select v-model="value" placeholder="请选择">
+      <p>{{opt.title}}</p>
+      <el-select v-model="opt.value" placeholder="请选择">
         <el-option
-          v-for="(item,index) in options"
+          v-for="(item,index) in opt.options"
           :key="index"
           :label="item.label"
           :value="item.value"
@@ -27,30 +27,41 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>列表项:</p>
-      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="selectAll" @input="onInput"></el-input>
+      <el-input
+        type="textarea"
+        :rows="8"
+        placeholder="请输入内容"
+        v-model="opt.selectAll"
+        @input="onInput"
+      ></el-input>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "SelectBasic:",
-      textInput: "placeholdel",
-      selectAll: "qwe\nasd\nzxc\n",
-      options: [
-        {
-          label: "黄金糕"
-        },
-        {
-          label: "双皮奶"
-        }
-      ],
-      value: ""
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "SelectBasic:",
+          textInput: "placeholdel",
+          selectAll: "qwe\nasd\nzxc\n",
+          options: [
+            {
+              label: "黄金糕"
+            },
+            {
+              label: "双皮奶"
+            }
+          ],
+          value: ""
+        };
+      }
+    }
   },
   created() {
     this.editInput();
@@ -60,11 +71,11 @@ export default {
       this.editInput();
     },
     editInput() {
-      let selectList = this.selectAll.split("\n");
+      let selectList = this.opt.selectAll.split("\n");
       selectList.splice(selectList.length - 1, 1);
-      this.options = [];
+      this.opt.options = [];
       selectList.forEach(item => {
-        this.options.push({ label: item });
+        this.opt.options.push({ label: item });
       });
     }
   }

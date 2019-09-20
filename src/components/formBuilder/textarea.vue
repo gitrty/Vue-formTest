@@ -1,17 +1,17 @@
 <template>
   <div class="toyo-textarea" data-sub="toyo-textarea">
     <div class="cont">
-      <p>{{title}}</p>
+      <p>{{opt.title}}</p>
       <el-input
-        :maxlength="maxText"
+        :maxlength="opt.maxText"
         type="textarea"
         :rows="4"
-        :placeholder="textInput"
-        v-model="textarea"
+        :placeholder="opt.textInput"
+        v-model="opt.textarea"
         style="width:70%"
       ></el-input>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -27,15 +27,15 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>描述文字:</p>
-      <input type="text" v-model="textInput" />
+      <input type="text" v-model="opt.textInput" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
       <p>最大长度</p>
-      <input type="text" v-model="maxText" />
+      <input type="text" v-model="opt.maxText" />
       <p>
-        <input type="checkbox" v-model="checked" /> 这个是必填项
+        <input type="checkbox" v-model="opt.checked" /> 这个是必填项
       </p>
     </div>
   </div>
@@ -43,17 +43,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: "textarea:",
-      textInput: "placeholdel",
-      textarea: "",
-      help: "最多140个字符",
-      checked: false,
-      maxText: 140
-    };
-  },
-  methods: {}
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "textarea:",
+          textInput: "placeholdel",
+          textarea: "",
+          help: "最多140个字符",
+          checked: false,
+          maxText: 140
+        };
+      }
+    }
+  }
 };
 </script>
 

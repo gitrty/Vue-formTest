@@ -1,11 +1,11 @@
 <template>
   <div class="toyo-starRating" data-sub="toyo-starRating">
     <div class="cont clearfix">
-      <p>{{title}}</p>
-      <el-rate v-model="value1" style="float:left"></el-rate>
+      <p>{{opt.title}}</p>
+      <el-rate v-model="opt.value1" style="float:left"></el-rate>
       <span class="zero" @click="toZero">×</span>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -21,25 +21,30 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>评价说明:</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "starRating:",
-      help: "填写帮助",
-      value1: null
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "starRating:",
+          help: "填写帮助",
+          value1: null
+        };
+      }
+    }
   },
   methods: {
     toZero() {
-      this.value1 = null;
+      this.opt.value1 = null;
     }
   }
 };

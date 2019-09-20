@@ -1,9 +1,9 @@
 <template>
   <div class="toyo-radioButtons" data-sub="toyo-radioButtons">
     <div class="cont clearfix">
-      <p>{{title}}</p>
-      <el-radio-group v-model="nodelist" style="width:70%;float:left;">
-        <div v-for="(item,index) in options" :key="index" style="margin-top:4px">
+      <p>{{opt.title}}</p>
+      <el-radio-group v-model="opt.nodelist" style="width:70%;float:left;">
+        <div v-for="(item,index) in opt.options" :key="index" style="margin-top:4px">
           <el-radio :label="item.label">{{item.label}}</el-radio>
         </div>
       </el-radio-group>
@@ -23,15 +23,40 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>列表项:</p>
-      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="selectAll" @input="onInput"></el-input>
+      <el-input
+        type="textarea"
+        :rows="8"
+        placeholder="请输入内容"
+        v-model="opt.selectAll"
+        @input="onInput"
+      ></el-input>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "radioButtons:",
+          textInput: "placeholdel",
+          selectAll: "qwe\nasd\nzxc\n",
+          options: [
+            {
+              label: "黄金糕"
+            }
+          ],
+          nodelist: [],
+          radio: 1
+        };
+      }
+    }
+  },
   data() {
     return {
       title: "radioButtons:",
@@ -54,11 +79,11 @@ export default {
       this.editInput();
     },
     editInput() {
-      let selectList = this.selectAll.split("\n");
+      let selectList = this.opt.selectAll.split("\n");
       selectList.splice(selectList.length - 1, 1);
-      this.options = [];
+      this.opt.options = [];
       selectList.forEach(item => {
-        this.options.push({ label: item });
+        this.opt.options.push({ label: item });
       });
     }
   }

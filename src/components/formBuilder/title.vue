@@ -1,7 +1,7 @@
 <template>
   <div class="toyo-title" data-sub="toyo-title">
-    <div class="title-top">{{title}}</div>
-    <div class="title-con">{{help}}</div>
+    <div class="title-top">{{opt.title}}</div>
+    <div class="title-con">{{opt.help}}</div>
     <div class="hr"></div>
 
     <div class="handle">
@@ -18,20 +18,28 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "什么什么活动报名表",
+          help: "请如实填写,如有弄虚作假取消参与资格"
+        };
+      }
+    }
+  },
   data() {
-    return {
-      title: "什么什么活动报名表",
-      help: "请如实填写,如有弄虚作假取消参与资格"
-    };
+    return {};
   },
   methods: {}
 };

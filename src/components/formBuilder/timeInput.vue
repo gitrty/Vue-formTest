@@ -1,10 +1,10 @@
 <template>
   <div class="toyo-timeInput" data-sub="toyo-timeInput">
     <div class="cont">
-      <p>{{title}}</p>
-      <el-date-picker v-model="num" type="datetime" placeholder="选择日期时间" size="small"></el-date-picker>
+      <p>{{opt.title}}</p>
+      <el-date-picker v-model="opt.num" type="datetime" placeholder="选择日期时间" size="small"></el-date-picker>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -20,11 +20,11 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
       <p>
-        <input type="checkbox" v-model="checked" /> 这个是必填项
+        <input type="checkbox" v-model="opt.checked" /> 这个是必填项
       </p>
     </div>
   </div>
@@ -32,15 +32,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: "Time Input:",
-      num: "",
-      help: "填写帮助",
-      checked: false
-    };
-  },
-  methods: {}
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "Time Input:",
+          num: "",
+          help: "填写帮助",
+          checked: false
+        };
+      }
+    }
+  }
 };
 </script>
 

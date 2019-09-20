@@ -1,10 +1,10 @@
 <template>
   <div class="toyo-numberInput" data-sub="toyo-numberInput">
     <div class="cont">
-      <p>{{title}}</p>
-      <input type="number" v-model='num'/>
+      <p>{{opt.title}}</p>
+      <input type="number" v-model="opt.num" />
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -20,25 +20,31 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
-      <p><input type="checkbox" v-model="checked"> 这个是必填项</p>
+      <input type="text" v-model="opt.help" />
+      <p>
+        <input type="checkbox" v-model="opt.checked" /> 这个是必填项
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "Number Input:",
-      num:'',
-      help: "填写帮助",
-      checked:false
-    };
-  },
-  methods: {}
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "Number Input:",
+          num: "",
+          help: "填写帮助",
+          checked: false
+        };
+      }
+    }
+  }
 };
 </script>
 
@@ -70,7 +76,7 @@ export default {
     text-indent: 10px;
   }
 }
-.help{
+.help {
   padding-left: 150px;
   font-size: 14px;
   margin-top: 4px;

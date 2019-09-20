@@ -1,10 +1,10 @@
 <template>
   <div class="toyo-radioButtons" data-sub="toyo-inlineRadioButtons">
     <div class="cont clearfix">
-      <p>{{title}}</p>
-      <el-radio-group v-model="nodelist" style="width:70%;float:left;">
+      <p>{{opt.title}}</p>
+      <el-radio-group v-model="opt.nodelist" style="width:70%;float:left;">
         <el-radio
-          v-for="(item,index) in options"
+          v-for="(item,index) in opt.options"
           :key="index"
           style="margin-top:4px"
           :label="item.label"
@@ -26,28 +26,33 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>列表项:</p>
-      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="selectAll" @input="onInput"></el-input>
+      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="opt.selectAll" @input="onInput"></el-input>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "inlineRadio:",
-      textInput: "placeholdel",
-      selectAll: "qwe\nasd\nzxc\n",
-      options: [
-        {
-          label: "黄金糕"
-        }
-      ],
-      nodelist: [],
-      radio: 1
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "inlineRadio:",
+          textInput: "placeholdel",
+          selectAll: "qwe\nasd\nzxc\n",
+          options: [
+            {
+              label: "黄金糕"
+            }
+          ],
+          nodelist: [],
+          radio: 1
+        };
+      }
+    }
   },
   created() {
     this.editInput();
@@ -57,11 +62,11 @@ export default {
       this.editInput();
     },
     editInput() {
-      let selectList = this.selectAll.split("\n");
+      let selectList = this.opt.selectAll.split("\n");
       selectList.splice(selectList.length - 1, 1);
-      this.options = [];
+      this.opt.options = [];
       selectList.forEach(item => {
-        this.options.push({ label: item });
+        this.opt.options.push({ label: item });
       });
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="toyo-button" data-sub="toyo-button">
     <div class="cont">
-      <p>{{title}}</p>
-      <el-button :type="tabq" size="small">{{textInput}}</el-button>
+      <p>{{opt.title}}</p>
+      <el-button :type="opt.tabq" size="small">{{opt.textInput}}</el-button>
     </div>
 
     <div class="handle">
@@ -19,13 +19,13 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>按钮文字:</p>
-      <input type="text" v-model="textInput" />
+      <input type="text" v-model="opt.textInput" />
       <p>风格</p>
-      <el-select v-model="value" placeholder="primary" @change="tabFg($event)">
+      <el-select v-model="opt.value" placeholder="primary" @change="tabFg($event)">
         <el-option
-          v-for="item in options"
+          v-for="item in opt.options"
           :key="item.value"
           :label="item.label"
           :value="item.label"
@@ -37,44 +37,49 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: "",
-      textInput: "button",
-      help: "风格",
-      tabq: "primary",
-      options: [
-        {
-          value: "",
-          label: "default"
-        },
-        {
-          value: "1",
-          label: "primary"
-        },
-        {
-          value: "2",
-          label: "success"
-        },
-        {
-          value: "3",
-          label: "info"
-        },
-        {
-          value: "4",
-          label: "warning"
-        },
-        {
-          value: "5",
-          label: "danger"
-        }
-      ],
-      value: ""
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "",
+          textInput: "submit",
+          help: "风格",
+          tabq: "primary",
+          options: [
+            {
+              value: "",
+              label: "default"
+            },
+            {
+              value: "1",
+              label: "primary"
+            },
+            {
+              value: "2",
+              label: "success"
+            },
+            {
+              value: "3",
+              label: "info"
+            },
+            {
+              value: "4",
+              label: "warning"
+            },
+            {
+              value: "5",
+              label: "danger"
+            }
+          ],
+          value: ""
+        };
+      }
+    }
   },
   methods: {
     tabFg(ev) {
-      this.tabq = ev;
+      this.opt.tabq = ev;
     }
   }
 };

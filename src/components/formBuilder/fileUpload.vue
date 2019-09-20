@@ -1,7 +1,7 @@
 <template>
   <div class="toyo-fileUpload" data-sub="toyo-fileUpload">
     <div class="cont clearfix">
-      <p>{{title}}</p>
+      <p>{{opt.title}}</p>
       <el-upload
         class="upload-demo"
         action="https://jsonplaceholder.typicode.com/posts/"
@@ -11,12 +11,12 @@
         multiple
         :limit="3"
         :on-exceed="handleExceed"
-        :file-list="fileList"
+        :file-list="opt.fileList"
       >
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -32,21 +32,26 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>上传文件说明:</p>
-      <input type="text" v-model="help" />
+      <input type="text" v-model="opt.help" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "fileUpload:",
-      help: "填写帮助",
-      fileList: []
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "fileUpload:",
+          help: "填写帮助",
+          fileList: []
+        };
+      }
+    }
   },
   methods: {
     handleRemove(file, fileList) {

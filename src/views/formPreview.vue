@@ -2,17 +2,21 @@
   <div class="formBuilder">
     <div class="user-forms">
       <div class="user-top"></div>
+      <div class="user-con">
+        <component
+          v-for="component in $store.state.componentList"
+          :is="component.sub"
+          :key="component.id"
+          :opt="component.opt"
+        ></component>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    let nodeLists = this.$parseDom(this.$store.state.formHtml);
-    nodeLists.style.padding = "0 14px";
-    document.querySelector(".user-forms").appendChild(nodeLists);
-  },
+  mounted() {},
   methods: {}
 };
 </script>
@@ -35,5 +39,8 @@ export default {
   height: 40px;
   background-color: #65aadd;
   border-radius: 8px 8px 0 0;
+}
+.user-con {
+  padding: 0 10px;
 }
 </style>

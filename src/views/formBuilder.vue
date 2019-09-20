@@ -68,6 +68,7 @@
           v-for="component in $store.state.componentList"
           :is="component.sub"
           :key="component.id"
+          :opt="component.opt"
           @click.native="edit(component.id,component.sub,$event)"
         ></component>
       </div>
@@ -325,7 +326,6 @@ export default {
     // 保存表单
     addform() {
       let form = document.querySelector(".container-con");
-      this.$store.state.formHtml = form.innerHTML;
       // this.$path("/formPreview");
     }
   },

@@ -1,10 +1,10 @@
 <template>
   <div class="toyo-textInput" data-sub="toyo-textInput">
     <div class="cont">
-      <p>{{title}}</p>
-      <el-input :placeholder="textInput" style="width:70%" size="small"></el-input>
+      <p>{{opt.title}}</p>
+      <el-input :placeholder="opt.textInput" style="width:70%" size="small"></el-input>
     </div>
-    <div class="help">{{help}}</div>
+    <div class="help">{{opt.help}}</div>
 
     <div class="handle">
       <div class="handle1">
@@ -20,25 +20,32 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>描述文字:</p>
-      <input type="text" v-model="textInput" />
+      <input type="text" v-model="opt.textInput" />
       <p>填写帮助</p>
-      <input type="text" v-model="help" />
-      <p><input type="checkbox" v-model="checked"> 这个是必填项</p>
+      <input type="text" v-model="opt.help" />
+      <p>
+        <input type="checkbox" v-model="opt.checked" /> 这个是必填项
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "Text Input:",
-      textInput: "placeholdel",
-      help: "填写帮助",
-      checked:false
-    };
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "Text Input:",
+          textInput: "placeholdel",
+          help: "填写帮助",
+          checked: false
+        };
+      }
+    }
   },
   methods: {}
 };
@@ -53,7 +60,7 @@ export default {
 .cont {
   font-size: 16px;
   font-weight: 900;
-      color: #606266;
+  color: #606266;
   white-space: nowrap;
   p {
     display: inline-block;
@@ -72,7 +79,7 @@ export default {
     text-indent: 10px;
   }
 }
-.help{
+.help {
   padding-left: 150px;
   font-size: 14px;
   margin-top: 4px;

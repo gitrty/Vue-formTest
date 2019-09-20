@@ -1,12 +1,12 @@
 <template>
   <div class="toyo-selectMultiple" data-sub="toyo-selectMultiple">
     <div class="cont">
-      <p>{{title}}</p>
+      <p>{{opt.title}}</p>
       <el-input
         type="textarea"
         :rows="4"
-        :placeholder="textInput"
-        v-model="selectAll"
+        :placeholder="opt.textInput"
+        v-model="opt.selectAll"
         style="width:70%"
       ></el-input>
     </div>
@@ -25,24 +25,27 @@
 
     <div class="nature">
       <p>标题:</p>
-      <input type="text" v-model="title" />
+      <input type="text" v-model="opt.title" />
       <p>列表项:</p>
-      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="selectAll"></el-input>
+      <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="opt.selectAll"></el-input>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      title: "selectMultiple:",
-      textInput: "placeholdel",
-      selectAll: "qwe\nasd\nzxc\n"
-    };
-  },
-  created() {},
-  methods: {}
+  props: {
+    opt: {
+      type: Object,
+      default() {
+        return {
+          title: "selectMultiple:",
+          textInput: "placeholdel",
+          selectAll: "qwe\nasd\nzxc\n"
+        };
+      }
+    }
+  }
 };
 </script>
 
