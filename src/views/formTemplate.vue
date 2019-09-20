@@ -17,62 +17,62 @@
             <b>意见反馈</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/yhmyddc')">
           <a href="javascript:void(0);">
             <b>用户满意度调查</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/hysqbg')">
           <a href="javascript:void(0);" class>
             <b>会员申请表格</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/hybmb')">
           <a href="javascript:void(0);">
             <b>会议报名表</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/yydjb')">
           <a href="javascript:void(0);">
             <b>预约登记表</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/ygtxl')">
           <a href="javascript:void(0);">
             <b>员工通讯录</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/bxsqb')">
           <a href="javascript:void(0);" class>
             <b>报销申请表</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/lyb')">
           <a href="javascript:void(0);">
             <b>留言板</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/tspt')">
           <a href="javascript:void(0);">
             <b>投诉平台</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/stnx')">
           <a href="javascript:void(0);">
             <b>社团纳新</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/khbfjl')">
           <a href="javascript:void(0);">
             <b>客户拜访记录</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/gzrb')">
           <a href="javascript:void(0);" class>
             <b>工作日报</b>
           </a>
         </li>
-        <li>
+        <li @click="$path('/formTemplate/jxkh')">
           <a href="javascript:void(0);">
             <b>绩效考核</b>
           </a>
@@ -84,7 +84,7 @@
     <div class="con-tem fl">
       <!-- top -->
       <div class="con-tem-top">
-        <el-button type="primary" size="small" class="tem-btn" @click="$path('/formBuilder')">选择此模板</el-button>
+        <el-button type="primary" size="small" class="tem-btn" @click="editTem">选择此模板</el-button>
       </div>
       <!-- container -->
       <div class="con-tem-container">
@@ -96,7 +96,14 @@
 
 <script>
 export default {
-  methods: {}
+  methods: {
+    editTem() {
+      this.$path("/formBuilder");
+      this.$store.state.componentList = JSON.parse(
+        JSON.stringify(this.$store.state.systemList)
+      );
+    }
+  }
 };
 </script>
 
