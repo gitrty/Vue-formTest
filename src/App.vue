@@ -6,6 +6,12 @@
 
 <script>
 export default {
+  created() {
+    // 获取所有组件
+    this.$store.state.imgList = JSON.parse(
+      JSON.stringify(this.$store.state.componentList)
+    );
+  },
   mounted() {
     this.upData();
   },

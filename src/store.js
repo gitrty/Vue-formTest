@@ -216,6 +216,7 @@ export default new Vuex.Store({
         }
       }
     ],
+    imgList: [],
     componentId: null,
     componentSub: null,
     componentOpt: null,
