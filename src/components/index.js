@@ -18,6 +18,13 @@ import starRating from './formBuilder/starRating.vue'
 import fileUpload from './formBuilder/fileUpload.vue'
 import button from './formBuilder/button.vue'
 
+const requireComponent = require.context('./formBuilder', true, /\.vue$/)
+requireComponent.keys().forEach(fileName => {
+  let fileNameStr = fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
+  // 全局注册组件
+  Vue.component(`toyo-${fileNameStr}`, fileNameStr)
+});
+
 export default {
   install(Vue) {
     Vue.component('toyo-title', title)

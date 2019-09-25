@@ -6,7 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     componentList: [
-      { id: 1, sub: 'toyo-title', opt: { title: "什么什么活动报名表", help: "请如实填写,如有弄虚作假取消参与资格" } },
+      {
+        id: 1, sub: 'toyo-title',
+        opt: { title: "什么什么活动报名表", help: "请如实填写,如有弄虚作假取消参与资格" }
+      },
       {
         id: 2, sub: 'toyo-textInput', opt: {
           title: "Text Input:",
